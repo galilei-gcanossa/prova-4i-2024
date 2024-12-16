@@ -25,14 +25,14 @@
       }
 
       function sposta() {
-        let el = document.querySelector("#treno");
+        let el = document.querySelector(".base");
         if (el.style.left === "") el.style.left = "0px";
 
         el.style.left = parseInt(el.style.left.replace("px", "")) + 50;
       }
 
       function muoviConTasti(evento) {
-        let el = document.querySelector("#treno");
+        let el = document.querySelector(".base");
         el.classList.add("tasto");
         if (evento.code === "KeyD") {
           sposta();
@@ -72,6 +72,6 @@
     <h1 onclick="saluta()">Javascript</h1>
     <button onclick="muoviTemp2()">Gioca</button>
 
-    <div id="treno" class="base"></div>
+    <div class="base"></div>
   </body>
 </html>
