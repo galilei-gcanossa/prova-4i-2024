@@ -1,7 +1,24 @@
 <html>
   <head>
     <title>Impariamo Javascript</title>
-    <style></style>
+    <style>
+      .base {
+        position: absolute;
+        background-color: red;
+        width: 64px;
+        height: 20px;
+        left: 0px;
+        top: 200px;
+        transition: left 600ms ease-in-out;
+      }
+
+      .tasto {
+        transition: left 100ms linear;
+        background-color: green;
+        height: 64px;
+        border-radius: 50%;
+      }
+    </style>
     <script>
       function saluta() {
         alert("Ciao a tutti!!!");
@@ -9,24 +26,52 @@
 
       function sposta() {
         let el = document.querySelector("#treno");
-        el.style.left = parseInt(el.style.left.replace("px", "")) + 20;
+        if (el.style.left === "") el.style.left = "0px";
+
+        el.style.left = parseInt(el.style.left.replace("px", "")) + 50;
+      }
+
+      function muoviConTasti(evento) {
+        let el = document.querySelector("#treno");
+        el.classList.add("tasto");
+        if (evento.code === "KeyD") {
+          sposta();
+        } else {
+          console.log(evento);
+        }
+        setTimeout(function () {
+          el.classList.remove("tasto");
+        }, 100);
+      }
+
+      function muoviTemp(evento) {
+        let t = setInterval(sposta, 1000);
+
+        let f = function () {
+          clearInterval(t);
+        };
+
+        setTimeout(f, 5000);
+      }
+
+      function muoviTemp2(evento) {
+        let i = 0;
+        let f = function () {
+          sposta();
+          i++;
+          if (i < 5) {
+            setTimeout(f, 1000);
+          }
+        };
+
+        f();
       }
     </script>
   </head>
-  <body>
+  <body onkeydown="muoviConTasti(event)">
     <h1 onclick="saluta()">Javascript</h1>
-    <button onclick="sposta()">Gioca</button>
+    <button onclick="muoviTemp2()">Gioca</button>
 
-    <div
-      id="treno"
-      style="
-        position: absolute;
-        background-color: red;
-        width: 64px;
-        height: 20px;
-        left: 0px;
-        top: 200px;
-      "
-    ></div>
+    <div id="treno" class="base"></div>
   </body>
 </html>
